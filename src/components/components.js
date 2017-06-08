@@ -2,14 +2,14 @@ module.exports = function(app) {
   app.provider('formioComponents', function() {
     var components = {};
     var groups = {
+      layout: {
+        title: 'Layout Components'
+      },
       __component: {
         title: 'Basic Components'
       },
       advanced: {
         title: 'Special Components'
-      },
-      layout: {
-        title: 'Layout Components'
       }
     };
     return {
