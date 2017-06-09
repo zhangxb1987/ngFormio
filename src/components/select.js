@@ -2,6 +2,7 @@
 var fs = require('fs');
 var _get = require('lodash/get');
 var _isEqual = require('lodash/isEqual');
+var _assign = require('lodash/assign');
 var _set = require('lodash/set');
 var _cloneDeep = require('lodash/cloneDeep');
 module.exports = function(app) {
@@ -213,7 +214,7 @@ module.exports = function(app) {
             // Ensures that the value is within the select items.
             var ensureValue = function() {
               var value = $scope.data[settings.key];
-              if (!value) {
+              if (!value || (Array.isArray(value) && value.length === 0)) {
                 return;
               }
               // Iterate through the list of items and see if our value exists...
@@ -424,14 +425,22 @@ module.exports = function(app) {
                 if (url) {
                   $scope.hasNextPage = true;
                   $scope.refreshItems = function(input, newUrl, append) {
-                    if (input === lastInput) {
-                      return;
+                    if (typeof input === 'string') {
+                      if (input === lastInput) {
+                        return;
+                      }
+                      else {
+                        // Since the search has changed, reset the limit and skip.
+                        options.params.limit = $scope.component.limit || 100;
+                        options.params.skip = 0;
+                      }
                     }
 
                     lastInput = input;
                     newUrl = newUrl || url;
                     newUrl = $interpolate(newUrl)({
-                      data: $scope.data,
+                      data: $scope.submission.data,
+                      row: $scope.data,
                       formioBase: $rootScope.apiBase || 'https://api.form.io'
                     });
                     if (!newUrl) {
@@ -444,16 +453,20 @@ module.exports = function(app) {
                       (typeof input === 'string') &&
                       input
                     ) {
-                      newUrl += ((newUrl.indexOf('?') === -1) ? '?' : '&') +
-                        encodeURIComponent(settings.searchField) +
-                        '=' +
-                        encodeURIComponent(input);
+                      options.params[encodeURIComponent(settings.searchField)] = encodeURIComponent(input);
+                    }
+                    else {
+                      delete options.params[encodeURIComponent(settings.searchField)];
                     }
 
                     // Add the other filter.
                     if (settings.filter) {
-                      var filter = $interpolate(settings.filter)({data: $scope.data});
-                      newUrl += ((newUrl.indexOf('?') === -1) ? '?' : '&') + filter;
+                      var filter = $interpolate(settings.filter)({
+                        data: $scope.submission.data,
+                        row: $scope.data
+                      });
+                      // This changes 'a=b&c=d' into an object and assigns to params.
+                      _assign(options.params, JSON.parse('{"' + decodeURI(filter).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}'));
                     }
 
                     // If they wish to return only some fields.
@@ -471,6 +484,9 @@ module.exports = function(app) {
                       if (data.length < options.params.limit) {
                         $scope.hasNextPage = false;
                       }
+                      else {
+                        $scope.hasNextPage = true;
+                      }
                       if (append) {
                         $scope.selectItems = $scope.selectItems.concat(data);
                       }
@@ -482,8 +498,33 @@ module.exports = function(app) {
                       ensureValue();
                     };
 
-                    return $http.get(newUrl, options).then(function(result) {
-                      var data = result.data;
+                    var promise;
+                    if (settings.dataSrc === 'resource') {
+                      promise = (new Formio(newUrl)).loadSubmissions(options);
+                    }
+                    else {
+                      // Add in headers if specified
+                      if ($scope.component.data.hasOwnProperty('headers') && $scope.component.data.headers.length > 0) {
+                        options.headers = _assign(options.headers, $scope.component.data.headers.reduce(function(headers, current) {
+                          if (current.key) {
+                            headers[current.key] = current.value;
+                          }
+                          return headers;
+                        }, {}));
+                      }
+
+                      //If disableLimit is true and data source is 'url' then removing 'limit' and 'skip' parameters from options.
+                      if (settings.dataSrc === 'url' && settings.data.disableLimit) {
+                        delete options.params.limit;
+                        delete options.params.skip;
+                      }
+
+                      promise = $http.get(newUrl, options).then(function(result) {
+                        return result.data;
+                      });
+                    }
+
+                    return promise.then(function(data) {
                       if (data) {
                         // If the selectValue prop is defined, use it.
                         if (selectValues) {
