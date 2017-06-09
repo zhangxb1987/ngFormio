@@ -4,6 +4,75 @@ All notable changes to this project will be documented in this file
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+## 2.19.1
+### Added
+ - Added 'disable limiting response' option for select component with url as datasource.
+
+### Fixed
+ - Default issue with the number field.
+ - Fix select url interpolation inside a datagrid to have both data and row.
+
+## 2.19.0
+### Added
+ - Form component to allow for complex multi-form workflows.
+ - Dynamic next page to the wizard.
+ - Hook system that allows any external system to hook into the submit and nextPage handlers.
+
+### Changed
+ - Moved the default value checks to a common utils file to save code duplication.
+ - Moved calculated values into utils for code simplification.
+ - Upgrade ng-dialog to v1.3.0
+ - Upgrade bootstrap-ui-datetime-picker to v2.6.0
+
+## 2.18.5
+### Added
+ - Add headers to Select Urls if specified.
+ 
+### Fixed
+ - Fields inside a panel inside a wizard didn't highlight properly if validation failed.
+ - Survey components didn't hightlight validations properly.
+
+## 2.18.4
+### Fixed
+ - Fixed issues with validation on submit
+ - Fixed select not searching and loading more properly.
+
+## 2.18.3
+### Fixed
+ - Changed Object.assign to lodash assign for compatibility.
+
+## 2.18.2 
+### Added
+ -  Allow interpolation of file directories for uploads.
+
+### Changed
+ - Select resource components use Formio provider instead of $http.get to allow offline compatibility.
+ 
+### Fixed
+ - Fixed false value for checkbox.
+
+## 2.18.1
+### Added
+ - Add setProjectUrl and getProjectUrl options to FormioProvider.
+ - Allow formio wizard to be naviagle without completion using wizardFreeNavigation parameter.
+
+## 2.18.0
+### Fixed
+ - An empty array was being appended to select data values when editing fields.
+  
+### Added
+ - Ability to specify width, offset, push and pull on columns.
+
+## 2.17.2
+### Fixed
+ - Issue with ngDialog not getting added to module dependencies.
+
+## 2.17.1
+### Fixed
+ - File upload in wizards wasn't working.
+
 ## 2.17.0
 ### Changed
  - Removed sourcemaps from build files.
