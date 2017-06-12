@@ -32,7 +32,7 @@
   </table>
   <div class="datagrid-add" ng-if="!component.hasOwnProperty('validate') || !component.validate.hasOwnProperty('maxLength') || rows.length < component.validate.maxLength">
     <a ng-click="addRow()" class="btn btn-primary">
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{ component.addAnother || "Add Another" | formioTranslate:null:builder }}
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{ component.addAnother || "ACTION.ADD" | formioTranslate:null:builder }}
     </a>
   </div>
 </div>
