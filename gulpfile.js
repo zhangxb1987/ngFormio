@@ -28,5 +28,8 @@ gulp.task('scripts', ['scripts:basic', 'scripts:complete', 'scripts:full']);
 gulp.task('build', function(cb) {
   plugins.runSeq(['clean', 'eslint'], 'scripts', 'styles', cb)
 });
+gulp.task('build-basic', function(cb) {
+  plugins.runSeq(['clean', 'eslint'], 'scripts:basic', 'styles:basic', cb)
+});
 gulp.task('watch', require('./gulp/watch')(gulp, plugins));
 gulp.task('default', ['watch']);

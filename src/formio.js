@@ -1,5 +1,6 @@
 require('./polyfills/polyfills');
 var fs = require('fs');
+var i18n = require('./i18n/zh-CN.js');
 
 var app = angular.module('formio', [
   'ngSanitize',
@@ -9,6 +10,7 @@ var app = angular.module('formio', [
   'ui.mask',
   'angularMoment',
   'ngDialog',
+  'pascalprecht.translate',
   'ngFileUpload',
   'ngFileSaver'
 ]);
@@ -86,6 +88,10 @@ app.config([
     $httpProvider.interceptors.push('formioInterceptor');
   }
 ]);
+
+app.config(['$translateProvider',function($translateProvider) {
+  $translateProvider.translations('zh-CN', i18n).preferredLanguage('zh-CN');
+}]);
 
 app.run([
   '$templateCache',
