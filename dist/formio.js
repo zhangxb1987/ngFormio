@@ -15252,6 +15252,9 @@ module.exports = {
     'Pull':'向左',
     'Add Column':'增加列',
 
+    'labelLabel':'标签',
+    'valueLabel':'值',
+    'Add Value':'增加',
     'Label':'标签',
     'Label.placeholder':'请填写标签信息',
     'Label.tooltip':'标签为元素显示名称',
@@ -15369,6 +15372,18 @@ module.exports = {
     'Maximum Length.placeholder': '请输入最大长度信息',
     'Maximum Length.tooltip': '最大长度',
 
+    'Minimum Value':'最小值',
+    'Minimum Value.placeholder':'请输入最小值信息',
+    'Minimum Value.tooltip': '最小值',
+
+    'Maximum Value':'最大值',
+    'Maximum Value.placeholder': '请输入最大值信息',
+    'Maximum Value.tooltip': '最大值',
+
+    'Increment Step':'递增值',
+    'Increment Step.placeholder': '请输入递增值信息',
+    'Increment Step.tooltip': '递增值表示数的数字必须是该递增值的倍数',
+
     'Regular Expression Pattern':'正则表达式',
     'Regular Expression Pattern.placeholder': '请输入正则表达式',
     'Regular Expression.tooltip': '正则表达式',
@@ -15423,12 +15438,38 @@ module.exports = {
     'Conditional.JSON Conditional':'JSON Conditional',
     'Conditional.JSON Conditional.Tooltip':'<small><p>执行自定义 <strong>JsonLogic</strong>.</p><p>可以通过元素属性获取元素的值.</p></small>',
 
+    'Checkbox.Input Type':'类型',
+    'Checkbox.Input Type.tooltip':'单选输入类型，checkbox或则radio',
+
+    'Select Boxes.values.label':'复选框选项',
+    'Select Boxes.values.tooltip':'标签用于展示，值用于表单提交的数据项',
+    'Select Boxes.Inline Layout':'一行显示',
+    'Select Boxes.Inline Layout.tooltip':'所有的选项展示在一行上',
+
+    'Radio.values.label':'单选框选项',
+    'Radio.values.tooltip':'标签用于展示，值用于表单提交的数据项',
+
+    'Data Source Type.tooltip':'数据来源，可以自己指定，也可以通过url返回数据',
+    'Data Source Type':'数据来源',
+    'Data Source URL':'数据源链接',
+    'Data Source URL.placeholder':'请指定数据源链接信息',
+    'Data Source URL.tooltip':'指定的数据源链接返回JSON数据类型',
+    'Data Source Values.label':'数据',
+    'Data Source Values.tooltip':'标签用于展示，值用于表单提交的数据项',
+
+    'Value Property.label':'值属性',
+    'Value Property.placeholder':'值属性',
+    'Value Property.tooltip':'值属性',
+
+    'Item Template.tooltip':'显示模板用于数据展示',
+    'Item Template.label':'显示模板',
+
     'Display':'显示',
     'Data':'数据',
     'Validation':'验证',
     'API':'属性',
     'Layout':'布局',
-    'Conditional':'显示条件',
+    'Conditional':'条件',
 
     'Layout.Overlay':'Overlay',
     'Layout.Overlay.Style':'样式',
@@ -15453,7 +15494,10 @@ module.exports = {
     'Special Components': '高级控件',
     'Layout Components': '布局',
 
-    'Example Code':'示例'
+    'Example Code':'示例',
+    'Enable WYWIWYG':'启用富文本编辑器',
+    'WYSIWYG Settings':'富文本编辑器设置',
+    'WYSIWYG Settings.tooltip':'请输入富文本编辑器设置信息'
 };
 
 },{}],244:[function(_dereq_,module,exports){
