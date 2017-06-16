@@ -15464,6 +15464,18 @@ module.exports = {
     'Item Template.tooltip':'显示模板用于数据展示',
     'Item Template.label':'显示模板',
 
+    'HTML Tag.label':'HTML标签',
+    'HTML Tag.placeholder':'请设置HTML标签信息',
+    'HTML Tag.tooltip':'HTML标签',
+
+    'CSS Class.label':'样式',
+    'CSS Class.placeholder':'样式',
+    'CSS Class.tooltip':'请设置样式信息',
+
+    'HTML Content.label':'内容',
+    'HTML Content.tooltip':'内容',
+    'HTML Content.placeholder':'请填写内容信息',
+
     'Display':'显示',
     'Data':'数据',
     'Validation':'验证',
