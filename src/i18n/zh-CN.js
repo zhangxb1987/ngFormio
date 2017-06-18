@@ -46,6 +46,13 @@ module.exports = {
     'Table':'表格',
     'Well':'Well',
 
+    'Action.label':'按钮类型',
+    'Theme.label':'主题风格',
+    'Size.label':'大小尺寸',
+    'Action.tooltip':'按钮操作类型',
+    'Theme.tooltip':'按钮风格主题',
+    'Size.tooltip':'按钮尺寸大小',
+
     'ACTION.OK': '确认',
     'ACTION.SAVE': '保存',
     'ACTION.SAVE-AND-CLOSE': '保存并关闭',
