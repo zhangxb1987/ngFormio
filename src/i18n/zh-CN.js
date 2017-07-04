@@ -332,8 +332,11 @@ module.exports = {
     'Data':'数据',
     'Validation':'验证',
     'API':'属性',
+    'API&Validation':'属性&验证',
     'Layout':'布局',
     'Conditional':'条件',
+    'Date':'日期设置',
+    'Time':'时间设置',
 
     'Layout.Overlay':'Overlay',
     'Layout.Overlay.Style':'样式',
@@ -341,6 +344,10 @@ module.exports = {
     'Layout.Overlay.Top':'顶部',
     'Layout.Overlay.Width':'宽度',
     'Layout.Overlay.Height':'高度',
+
+    'Date Format.label':'日期格式',
+    'Date Format.placeholder':'请输入日期格式信息',
+    'Date Format.tooltip':'举例：yyyy-MM-dd, yyyy-MM-dd HH:mm:ss, yyyy/MM/dd @ h:mma',
 
     'Removing this component will also': '移除该控件会同时',
     'remove all of its children': '移除它的所有子元素',
