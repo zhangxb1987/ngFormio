@@ -15208,6 +15208,7 @@ module.exports = {
     'Email':'电子邮件',
     'Phone Number':'移动电话',
     'Address':'地址',
+    'China Address':'省市县',
     'Date / Time':'日期／时间',
     'Day':'日期',
     'Currency':'金额',
@@ -15289,6 +15290,13 @@ module.exports = {
     'Label':'标签',
     'Label.placeholder':'请填写标签信息',
     'Label.tooltip':'标签为元素显示名称',
+
+    'Layout Table Number of Rows.label':'行数',
+    'Layout Table Number of Columns.label':'列数',
+    'Layout Fieldset Legend.label':'标签',
+    'Layout Fieldset Legend.placeholder':'请输入标签信息',
+    'Layout Panel Theme.label':'主题风格',
+    'Layout Panel Title.label':'标签',
 
     'Default Value':'默认值',
     'Default Value.placeholder':'请填写默认值',
