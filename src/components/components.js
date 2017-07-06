@@ -17,6 +17,10 @@ module.exports = function(app) {
         groups[name] = group;
       },
       register: function(type, component, group) {
+        if (component['initial'] === false) {
+          return false;
+        }
+
         if (!components[type]) {
           components[type] = component;
         }

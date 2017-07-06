@@ -11,6 +11,19 @@ module.exports = {
     'ADVANCED_COMPONENTS_TITLE': '高 级 控 件',
     'LAYOUT_COMPONENTS_TITLE': '布 局',
 
+    'January':'1月',
+    'February':'2月',
+    'March':'3月',
+    'April':'4月',
+    'May':'5月',
+    'June':'6月',
+    'July':'7月',
+    'August':'8月',
+    'September':'9月',
+    'October':'10月',
+    'November':'11月',
+    'December':'12月',
+
     'false':'否',
     'true':'是',
 
@@ -31,7 +44,7 @@ module.exports = {
     'Address':'地址',
     'Date / Time':'日期／时间',
     'Day':'日期',
-    'Currency':'货币',
+    'Currency':'金额',
     'Hidden':'隐藏域',
     'Resource':'资源',
     'File':'附件',
@@ -188,8 +201,16 @@ module.exports = {
     'Right Icon.tooltip': '用于显示图标. 举例: \'glyphicon glyphicon-search\' 或 \'fa fa-plus\'',
 
     'Upload Url':'上传路径',
-    'Upload.placeholder': '输入文件上传的路径',
-    'Upload.tooltip': '文件上传的路径',
+    'Upload Url.placeholder': '输入文件上传的路径',
+    'Upload Url.tooltip': '文件上传的路径',
+    'Update Browse.label': '点击选择文件',
+    'Update Storage Setup Erro.tooltip':'文件上传存储方式未设置！',
+    'Upload URL Not Provided.tooltip':'文件上传路径为设置!',
+    'Upload Starting upload.tooltip':'上传中',
+    'Upload Drag/Drop Not Supported.tooltip':'当前浏览器不支持拖拽方式！',
+    'Update Drag File.tooltip':'拖拽文件到这里，或',
+    'Update File Name.tooltip':'文件名',
+    'Update File Size.tooltip':'文件大小',
 
     'Directory':'目录',
     'Directory.placeholder': '(可选) 输入文件存放的目录',
@@ -345,9 +366,29 @@ module.exports = {
     'Layout.Overlay.Width':'宽度',
     'Layout.Overlay.Height':'高度',
 
+    'Sign Footer Label.label':'标签',
+    'Sign Footer Label.placeholder':'请填写标签信息',
+    'Sign Footer Label.title':'请填写标签信息',
+
     'Date Format.label':'日期格式',
     'Date Format.placeholder':'请输入日期格式信息',
     'Date Format.tooltip':'举例：yyyy-MM-dd, yyyy-MM-dd HH:mm:ss, yyyy/MM/dd @ h:mma',
+
+    'Input.Day.label':'日',
+    'Input.Month.label':'月',
+    'Input.Year.label':'年',
+
+    'Hide Day.label':'不显示日字段',
+    'Hide Month.label':'不显示月字段',
+    'Hide Year.label':'不显示年字段',
+
+    'Hide Day.title':'不显示日字段',
+    'Hide Month.title':'不显示月字段',
+    'Hide Year.title':'不显示年字段',
+
+    'Require Day.label':'日字段必填',
+    'Require Month.label':'月字段必填',
+    'Require Year.label':'年字段必填',
 
     'Removing this component will also': '移除该控件会同时',
     'remove all of its children': '移除它的所有子元素',

@@ -6,6 +6,7 @@ module.exports = function(app) {
     'formioComponentsProvider',
     function(formioComponentsProvider) {
       formioComponentsProvider.register('custom', {
+        initial: false,
         title: 'Custom',
         template: 'formio/components/custom.html',
         group: 'advanced',

@@ -9444,6 +9444,10 @@ module.exports = function(app) {
         groups[name] = group;
       },
       register: function(type, component, group) {
+        if (component['initial'] === false) {
+          return false;
+        }
+
         if (!components[type]) {
           components[type] = component;
         }
@@ -9493,6 +9497,7 @@ module.exports = function(app) {
     'formioComponentsProvider',
     function(formioComponentsProvider) {
       formioComponentsProvider.register('container', {
+        initial: false,
         title: 'Container',
         template: 'formio/components/container.html',
         viewTemplate: 'formio/componentsView/container.html',
@@ -9699,6 +9704,7 @@ module.exports = function(app) {
     'formioComponentsProvider',
     function(formioComponentsProvider) {
       formioComponentsProvider.register('custom', {
+        initial: false,
         title: 'Custom',
         template: 'formio/components/custom.html',
         group: 'advanced',
@@ -10207,7 +10213,7 @@ module.exports = function(app) {
         "<div class=\"day-input\">\r\n  <day-input\r\n    name=\"{{componentId}}\"\r\n    component-id=\"componentId\"\r\n    read-only=\"isDisabled(component, data)\"\r\n    component=\"component\"\r\n    ng-required=\"isRequired(component)\"\r\n    custom-validator=\"component.validate.custom\"\r\n    ng-model=\"data[component.key]\"\r\n    tabindex=\"{{ component.tabindex || 0 }}\"\r\n    builder=\"builder\"\r\n  ></day-input>\r\n</div>\r\n"
       ));
       $templateCache.put('formio/components/day-input.html',
-        "<div class=\"daySelect form row\">\r\n  <div class=\"form-group col-xs-3\" ng-if=\"component.dayFirst && !component.fields.day.hide\">\r\n    <label for=\"{{componentId}}-day\" ng-class=\"{'field-required': component.fields.day.required}\">{{ \"Day\" | formioTranslate:null:builder }}</label>\r\n    <input\r\n      class=\"form-control\"\r\n      type=\"text\"\r\n      id=\"{{componentId}}-day\"\r\n      ng-model=\"date.day\"\r\n      ng-change=\"onChange()\"\r\n      style=\"padding-right: 10px;\"\r\n      ng-attr-placeholder=\"{{component.fields.day.placeholder}}\"\r\n      day-part\r\n      characters=\"2\"\r\n      min=\"0\"\r\n      max=\"31\"\r\n      ng-disabled=\"readOnly\"\r\n    />\r\n  </div>\r\n  <div class=\"form-group col-xs-4\" ng-if=\"!component.fields.month.hide\">\r\n    <label for=\"{{componentId}}-month\" ng-class=\"{'field-required': component.fields.month.required}\">{{ \"Month\" | formioTranslate:null:builder }}</label>\r\n    <select\r\n      class=\"form-control\"\r\n      type=\"text\"\r\n      id=\"{{componentId}}-month\"\r\n      ng-model=\"date.month\"\r\n      ng-change=\"onChange()\"\r\n      ng-disabled=\"readOnly\"\r\n      ng-options=\"month.value as month.label | formioTranslate:null:builder for month in months\"\r\n    ></select>\r\n  </div>\r\n  <div class=\"form-group col-xs-3\" ng-if=\"!component.dayFirst && !component.fields.day.hide\">\r\n    <label for=\"{{componentId}}-day\" ng-class=\"{'field-required': component.fields.day.required}\">{{ \"Day\" | formioTranslate:null:builder }}</label>\r\n    <input\r\n      class=\"form-control\"\r\n      type=\"text\"\r\n      id=\"{{componentId}}-day1\"\r\n      ng-model=\"date.day\"\r\n      ng-change=\"onChange()\"\r\n      style=\"padding-right: 10px;\"\r\n      ng-attr-placeholder=\"{{component.fields.day.placeholder}}\"\r\n      day-part\r\n      characters=\"2\"\r\n      min=\"0\"\r\n      max=\"31\"\r\n      ng-disabled=\"readOnly\"\r\n    />\r\n  </div>\r\n  <div class=\"form-group col-xs-5\" ng-if=\"!component.fields.year.hide\">\r\n    <label for=\"{{componentId}}-year\" ng-class=\"{'field-required': component.fields.year.required}\">{{ \"Year\" | formioTranslate:null:builder }}</label>\r\n    <input\r\n      class=\"form-control\"\r\n      type=\"text\"\r\n      id=\"{{componentId}}-year\"\r\n      ng-model=\"date.year\"\r\n      ng-change=\"onChange()\"\r\n      style=\"padding-right: 10px;\"\r\n      ng-attr-placeholder=\"{{component.fields.year.placeholder}}\"\r\n      characters=\"4\"\r\n      min=\"0\"\r\n      max=\"2100\"\r\n      ng-disabled=\"readOnly\"\r\n    />\r\n  </div>\r\n</div>\r\n"
+        "<div class=\"daySelect form row\">\n  <div class=\"form-group col-xs-5\" ng-if=\"!component.fields.year.hide\">\n    <label for=\"{{componentId}}-year\" ng-class=\"{'field-required': component.fields.year.required}\">{{ \"Input.Year.label\" | formioTranslate:null:builder }}</label>\n    <input\n      class=\"form-control\"\n      type=\"text\"\n      id=\"{{componentId}}-year\"\n      ng-model=\"date.year\"\n      ng-change=\"onChange()\"\n      style=\"padding-right: 10px;\"\n      ng-attr-placeholder=\"{{component.fields.year.placeholder}}\"\n      characters=\"4\"\n      min=\"0\"\n      max=\"2100\"\n      ng-disabled=\"readOnly\"\n    />\n  </div>\n  <div class=\"form-group col-xs-3\" ng-if=\"component.dayFirst && !component.fields.day.hide\">\n    <label for=\"{{componentId}}-day\" ng-class=\"{'field-required': component.fields.day.required}\">{{ \"Input.Day.label\" | formioTranslate:null:builder }}</label>\n    <input\n      class=\"form-control\"\n      type=\"text\"\n      id=\"{{componentId}}-day\"\n      ng-model=\"date.day\"\n      ng-change=\"onChange()\"\n      style=\"padding-right: 10px;\"\n      ng-attr-placeholder=\"{{component.fields.day.placeholder}}\"\n      day-part\n      characters=\"2\"\n      min=\"0\"\n      max=\"31\"\n      ng-disabled=\"readOnly\"\n    />\n  </div>\n  <div class=\"form-group col-xs-4\" ng-if=\"!component.fields.month.hide\">\n    <label for=\"{{componentId}}-month\" ng-class=\"{'field-required': component.fields.month.required}\">{{ \"Input.Month.label\" | formioTranslate:null:builder }}</label>\n    <select\n      class=\"form-control\"\n      type=\"text\"\n      id=\"{{componentId}}-month\"\n      ng-model=\"date.month\"\n      ng-change=\"onChange()\"\n      ng-disabled=\"readOnly\"\n      ng-options=\"month.value as month.label | formioTranslate:null:builder for month in months\"\n    ></select>\n  </div>\n  <div class=\"form-group col-xs-3\" ng-if=\"!component.dayFirst && !component.fields.day.hide\">\n    <label for=\"{{componentId}}-day\" ng-class=\"{'field-required': component.fields.day.required}\">{{ \"Input.Day.label\" | formioTranslate:null:builder }}</label>\n    <input\n      class=\"form-control\"\n      type=\"text\"\n      id=\"{{componentId}}-day1\"\n      ng-model=\"date.day\"\n      ng-change=\"onChange()\"\n      style=\"padding-right: 10px;\"\n      ng-attr-placeholder=\"{{component.fields.day.placeholder}}\"\n      day-part\n      characters=\"2\"\n      min=\"0\"\n      max=\"31\"\n      ng-disabled=\"readOnly\"\n    />\n  </div>\n</div>\n"
       );
     }
   ]);
@@ -10469,10 +10475,12 @@ module.exports = function(app) {
     '$scope',
     '$interpolate',
     'FormioUtils',
+    '$filter',
     function(
       $scope,
       $interpolate,
-      FormioUtils
+      FormioUtils,
+      $filter
     ) {
       if ($scope.builder) return;
       $scope.fileUploads = {};
@@ -10490,7 +10498,7 @@ module.exports = function(app) {
       if ($scope.data && $scope.data[$scope.component.key] && $scope.data[$scope.component.key][0] === '') {
         $scope.data[$scope.component.key].splice(0, 1);
       }
-
+      var formioTranslate = $filter('formioTranslate');
       $scope.upload = function(files) {
         if ($scope.component.storage && files && files.length) {
           angular.forEach(files, function(file) {
@@ -10500,7 +10508,7 @@ module.exports = function(app) {
               name: fileName,
               size: file.size,
               status: 'info',
-              message: 'Starting upload'
+              message: formioTranslate('Upload Starting upload.tooltip')
             };
             var dir = $scope.component.dir || '';
             dir = $interpolate(dir)({data: $scope.data, row: $scope.row});
@@ -10510,7 +10518,7 @@ module.exports = function(app) {
             }
             else {
               $scope.fileUploads[fileName].status = 'error';
-              $scope.fileUploads[fileName].message = 'File Upload URL not provided.';
+              $scope.fileUploads[fileName].message = formioTranslate('Upload URL Not Provided.tooltip');
             }
 
             if (formio) {
@@ -10554,11 +10562,11 @@ module.exports = function(app) {
       );
 
       $templateCache.put('formio/components/formio-file-list.html',
-        "<table class=\"table table-striped table-bordered\">\r\n  <thead>\r\n    <tr>\r\n      <td ng-if=\"!readOnly\" style=\"width:1%;white-space:nowrap;\"></td>\r\n      <th>File Name</th>\r\n      <th>Size</th>\r\n    </tr>\r\n  </thead>\r\n  <tbody>\r\n    <tr ng-repeat=\"file in files track by $index\">\r\n      <td ng-if=\"!readOnly\" style=\"width:1%;white-space:nowrap;\"><a ng-if=\"!readOnly\" href=\"#\" ng-click=\"removeFile($event, $index)\" style=\"padding: 2px 4px;\" class=\"btn btn-sm btn-default\"><span class=\"glyphicon glyphicon-remove\"></span></a></td>\r\n      <td><formio-file file=\"file\" form=\"form\"></formio-file></td>\r\n      <td>{{ fileSize(file.size) }}</td>\r\n    </tr>\r\n  </tbody>\r\n</table>\r\n"
+        "<table class=\"table table-striped table-bordered\">\n  <thead>\n    <tr>\n      <td ng-if=\"!readOnly\" style=\"width:1%;white-space:nowrap;\"></td>\n      <th>{{'Update File Name.tooltip' | formioTranslate}}</th>\n      <th>{{'Update File Size.tooltip' | formioTranslate}}</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr ng-repeat=\"file in files track by $index\">\n      <td ng-if=\"!readOnly\" style=\"width:1%;white-space:nowrap;\"><a ng-if=\"!readOnly\" href=\"#\" ng-click=\"removeFile($event, $index)\" style=\"padding: 2px 4px;\" class=\"btn btn-sm btn-default\"><span class=\"glyphicon glyphicon-remove\"></span></a></td>\n      <td><formio-file file=\"file\" form=\"form\"></formio-file></td>\n      <td>{{ fileSize(file.size) }}</td>\n    </tr>\n  </tbody>\n</table>\n"
       );
 
       $templateCache.put('formio/components/file.html',
-        "<label ng-if=\"component.label && !component.hideLabel\" for=\"{{ componentId }}\" class=\"control-label\" ng-class=\"{'field-required': isRequired(component)}\">{{ component.label | formioTranslate:null:builder }}</label>\r\n<span ng-if=\"!component.label && isRequired(component)\" class=\"glyphicon glyphicon-asterisk form-control-feedback field-required-inline\" aria-hidden=\"true\"></span>\r\n<div ng-controller=\"formioFileUpload\">\r\n  <formio-file-list files=\"data[component.key]\" form=\"formio.formUrl\" ng-if=\"!component.image\"></formio-file-list>\r\n  <formio-image-list files=\"data[component.key]\" form=\"formio.formUrl\" width=\"component.imageSize\" ng-if=\"component.image\"></formio-image-list>\r\n  <div ng-if=\"!readOnly && (component.multiple || (!component.multiple && !data[component.key].length))\">\r\n    <div ngf-drop=\"upload($files)\" class=\"fileSelector\" ngf-drag-over-class=\"'fileDragOver'\" ngf-multiple=\"component.multiple\" id=\"{{ componentId }}\" name=\"{{ componentId }}\"><span class=\"glyphicon glyphicon-cloud-upload\"></span>Drop files to attach, or <a style=\"cursor: pointer;\" ngf-select=\"upload($files)\" tabindex=\"{{ component.tabindex || 0 }}\" ngf-multiple=\"component.multiple\">browse</a>.</div>\r\n    <div ng-if=\"!component.storage\" class=\"alert alert-warning\">No storage has been set for this field. File uploads are disabled until storage is set up.</div>\r\n    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>\r\n  </div>\r\n  <div ng-repeat=\"fileUpload in fileUploads track by $index\" ng-class=\"{'has-error': fileUpload.status === 'error'}\" class=\"file\">\r\n    <div class=\"row\">\r\n      <div class=\"fileName control-label col-sm-10\">{{ fileUpload.name }} <span ng-click=\"removeUpload(fileUpload.name)\" class=\"glyphicon glyphicon-remove\"></span></div>\r\n      <div class=\"fileSize control-label col-sm-2 text-right\">{{ fileSize(fileUpload.size) }}</div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <span ng-if=\"fileUpload.status === 'progress'\">\r\n          <div class=\"progress\">\r\n            <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"{{fileUpload.progress}}\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:{{fileUpload.progress}}%\">\r\n              <span class=\"sr-only\">{{fileUpload.progress}}% Complete</span>\r\n            </div>\r\n          </div>\r\n        </span>\r\n        <div ng-if=\"!fileUpload.status !== 'progress'\" class=\"bg-{{ fileUpload.status }} control-label\">{{ fileUpload.message }}</div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+        "<label ng-if=\"component.label && !component.hideLabel\" for=\"{{ componentId }}\" class=\"control-label\" ng-class=\"{'field-required': isRequired(component)}\">{{ component.label | formioTranslate:null:builder }}</label>\n<span ng-if=\"!component.label && isRequired(component)\" class=\"glyphicon glyphicon-asterisk form-control-feedback field-required-inline\" aria-hidden=\"true\"></span>\n<div ng-controller=\"formioFileUpload\">\n  <formio-file-list files=\"data[component.key]\" form=\"formio.formUrl\" ng-if=\"!component.image\"></formio-file-list>\n  <formio-image-list files=\"data[component.key]\" form=\"formio.formUrl\" width=\"component.imageSize\" ng-if=\"component.image\"></formio-image-list>\n  <div ng-if=\"!readOnly && (component.multiple || (!component.multiple && !data[component.key].length))\">\n    <div ngf-drop=\"upload($files)\" class=\"fileSelector\" ngf-drag-over-class=\"'fileDragOver'\" ngf-multiple=\"component.multiple\" id=\"{{ componentId }}\" name=\"{{ componentId }}\">\n      <span class=\"glyphicon glyphicon-cloud-upload\"></span>{{'Update Drag File.tooltip' | formioTranslate}} <a style=\"cursor: pointer;\" ngf-select=\"upload($files)\" tabindex=\"{{ component.tabindex || 0 }}\" ngf-multiple=\"component.multiple\">{{'Update Browse.label' | formioTranslate}}</a>.\n    </div>\n    <div ng-if=\"!component.storage\" class=\"alert alert-warning\">{{'Update Storage Setup Errot.tooltip' | formioTranslate}}</div>\n    <div ngf-no-file-drop>{{'Upload Drag/Drop Not Supported.tooltip' | formioTranslate}}</div>\n  </div>\n  <div ng-repeat=\"fileUpload in fileUploads track by $index\" ng-class=\"{'has-error': fileUpload.status === 'error'}\" class=\"file\">\n    <div class=\"row\">\n      <div class=\"fileName control-label col-sm-10\">{{ fileUpload.name }} <span ng-click=\"removeUpload(fileUpload.name)\" class=\"glyphicon glyphicon-remove\"></span></div>\n      <div class=\"fileSize control-label col-sm-2 text-right\">{{ fileSize(fileUpload.size) }}</div>\n    </div>\n    <div class=\"row\">\n      <div class=\"col-sm-12\">\n        <span ng-if=\"fileUpload.status === 'progress'\">\n          <div class=\"progress\">\n            <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"{{fileUpload.progress}}\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:{{fileUpload.progress}}%\">\n              <span class=\"sr-only\">{{fileUpload.progress}}%</span>\n            </div>\n          </div>\n        </span>\n        <div ng-if=\"!fileUpload.status !== 'progress'\" class=\"bg-{{ fileUpload.status }} control-label\">{{ fileUpload.message }}</div>\n      </div>\n    </div>\n  </div>\n</div>\n"
       );
 
       $templateCache.put('formio/componentsView/file.html',
@@ -10578,6 +10586,7 @@ module.exports = function(app) {
     'formioComponentsProvider',
     function(formioComponentsProvider) {
       formioComponentsProvider.register('form', {
+        initial: false,
         title: 'Form',
         template: 'formio/components/form.html',
         group: 'advanced',
@@ -11097,6 +11106,7 @@ module.exports = function(app) {
     'formioComponentsProvider',
     function(formioComponentsProvider) {
       formioComponentsProvider.register('resource', {
+        initial:false,
         title: 'Resource',
         tableView: function(data, component, $interpolate) {
           if ($interpolate) {
@@ -12014,9 +12024,9 @@ module.exports = function(app) {
           label: '',
           key: 'signature',
           placeholder: '',
-          footer: 'Sign above',
+          footer: '签 名',
           width: '100%',
-          height: '150',
+          height: '100',
           penColor: 'black',
           backgroundColor: 'rgb(245,245,235)',
           minWidth: '0.5',
@@ -12143,6 +12153,7 @@ module.exports = function(app) {
     'formioComponentsProvider',
     function(formioComponentsProvider) {
       formioComponentsProvider.register('survey', {
+        initial: false,
         title: 'Survey',
         template: 'formio/components/survey.html',
         group: 'advanced',
@@ -15166,6 +15177,19 @@ module.exports = {
     'ADVANCED_COMPONENTS_TITLE': '高 级 控 件',
     'LAYOUT_COMPONENTS_TITLE': '布 局',
 
+    'January':'1月',
+    'February':'2月',
+    'March':'3月',
+    'April':'4月',
+    'May':'5月',
+    'June':'6月',
+    'July':'7月',
+    'August':'8月',
+    'September':'9月',
+    'October':'10月',
+    'November':'11月',
+    'December':'12月',
+
     'false':'否',
     'true':'是',
 
@@ -15186,7 +15210,7 @@ module.exports = {
     'Address':'地址',
     'Date / Time':'日期／时间',
     'Day':'日期',
-    'Currency':'货币',
+    'Currency':'金额',
     'Hidden':'隐藏域',
     'Resource':'资源',
     'File':'附件',
@@ -15343,8 +15367,16 @@ module.exports = {
     'Right Icon.tooltip': '用于显示图标. 举例: \'glyphicon glyphicon-search\' 或 \'fa fa-plus\'',
 
     'Upload Url':'上传路径',
-    'Upload.placeholder': '输入文件上传的路径',
-    'Upload.tooltip': '文件上传的路径',
+    'Upload Url.placeholder': '输入文件上传的路径',
+    'Upload Url.tooltip': '文件上传的路径',
+    'Update Browse.label': '点击选择文件',
+    'Update Storage Setup Erro.tooltip':'文件上传存储方式未设置！',
+    'Upload URL Not Provided.tooltip':'文件上传路径为设置!',
+    'Upload Starting upload.tooltip':'上传中',
+    'Upload Drag/Drop Not Supported.tooltip':'当前浏览器不支持拖拽方式！',
+    'Update Drag File.tooltip':'拖拽文件到这里，或',
+    'Update File Name.tooltip':'文件名',
+    'Update File Size.tooltip':'文件大小',
 
     'Directory':'目录',
     'Directory.placeholder': '(可选) 输入文件存放的目录',
@@ -15500,9 +15532,29 @@ module.exports = {
     'Layout.Overlay.Width':'宽度',
     'Layout.Overlay.Height':'高度',
 
+    'Sign Footer Label.label':'标签',
+    'Sign Footer Label.placeholder':'请填写标签信息',
+    'Sign Footer Label.title':'请填写标签信息',
+
     'Date Format.label':'日期格式',
     'Date Format.placeholder':'请输入日期格式信息',
     'Date Format.tooltip':'举例：yyyy-MM-dd, yyyy-MM-dd HH:mm:ss, yyyy/MM/dd @ h:mma',
+
+    'Input.Day.label':'日',
+    'Input.Month.label':'月',
+    'Input.Year.label':'年',
+
+    'Hide Day.label':'不显示日字段',
+    'Hide Month.label':'不显示月字段',
+    'Hide Year.label':'不显示年字段',
+
+    'Hide Day.title':'不显示日字段',
+    'Hide Month.title':'不显示月字段',
+    'Hide Year.title':'不显示年字段',
+
+    'Require Day.label':'日字段必填',
+    'Require Month.label':'月字段必填',
+    'Require Year.label':'年字段必填',
 
     'Removing this component will also': '移除该控件会同时',
     'remove all of its children': '移除它的所有子元素',

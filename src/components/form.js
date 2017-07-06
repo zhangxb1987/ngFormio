@@ -6,6 +6,7 @@ module.exports = function(app) {
     'formioComponentsProvider',
     function(formioComponentsProvider) {
       formioComponentsProvider.register('form', {
+        initial: false,
         title: 'Form',
         template: 'formio/components/form.html',
         group: 'advanced',

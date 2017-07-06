@@ -164,10 +164,12 @@ module.exports = function(app) {
     '$scope',
     '$interpolate',
     'FormioUtils',
+    '$filter',
     function(
       $scope,
       $interpolate,
-      FormioUtils
+      FormioUtils,
+      $filter
     ) {
       if ($scope.builder) return;
       $scope.fileUploads = {};
@@ -185,7 +187,7 @@ module.exports = function(app) {
       if ($scope.data && $scope.data[$scope.component.key] && $scope.data[$scope.component.key][0] === '') {
         $scope.data[$scope.component.key].splice(0, 1);
       }
-
+      var formioTranslate = $filter('formioTranslate');
       $scope.upload = function(files) {
         if ($scope.component.storage && files && files.length) {
           angular.forEach(files, function(file) {
@@ -195,7 +197,7 @@ module.exports = function(app) {
               name: fileName,
               size: file.size,
               status: 'info',
-              message: 'Starting upload'
+              message: formioTranslate('Upload Starting upload.tooltip')
             };
             var dir = $scope.component.dir || '';
             dir = $interpolate(dir)({data: $scope.data, row: $scope.row});
@@ -205,7 +207,7 @@ module.exports = function(app) {
             }
             else {
               $scope.fileUploads[fileName].status = 'error';
-              $scope.fileUploads[fileName].message = 'File Upload URL not provided.';
+              $scope.fileUploads[fileName].message = formioTranslate('Upload URL Not Provided.tooltip');
             }
 
             if (formio) {
