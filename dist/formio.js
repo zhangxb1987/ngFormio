@@ -9341,6 +9341,88 @@ module.exports = function(app) {
 },{}],188:[function(_dereq_,module,exports){
 "use strict";
 
+
+module.exports = function(app) {
+  app.config([
+    'formioComponentsProvider',
+    function(formioComponentsProvider) {
+      formioComponentsProvider.register('chinaaddress', {
+        title: 'China Address',
+        template: 'formio/components/china-address.html',
+        controller: ['$scope', '$http', function($scope, $http) {
+          if ($scope.builder) return;
+          $scope.address = {};
+          $scope.addresses = [];
+          $scope.refreshAddress = function(address) {
+            var params = {
+              address: address,
+              sensor: false
+            };
+            if (!address) {
+              return;
+            }
+            if ($scope.component.map && $scope.component.map.region) {
+              params.region = $scope.component.map.region;
+            }
+            if ($scope.component.map && $scope.component.map.key) {
+              params.key = $scope.component.map.key;
+            }
+            return $http.get(
+              'https://maps.googleapis.com/maps/api/geocode/json',
+              {
+                disableJWT: true,
+                params: params,
+                headers: {
+                  Authorization: undefined,
+                  Pragma: undefined,
+                  'Cache-Control': undefined
+                }
+              }
+            ).then(function(response) {
+              $scope.addresses = response.data.results;
+            });
+          };
+        }],
+        tableView: function(data) {
+          return data ? data.formatted_address : '';
+        },
+        group: 'advanced',
+        settings: {
+          input: true,
+          tableView: true,
+          label: '',
+          key: 'chinaAddressField',
+          placeholder: '',
+          multiple: false,
+          protected: false,
+          clearOnHide: true,
+          unique: false,
+          persistent: true,
+          hidden: false,
+          map: {
+            region: '',
+            key: ''
+          },
+          validate: {
+            required: false
+          }
+        }
+      });
+    }
+  ]);
+  app.run([
+    '$templateCache',
+    function($templateCache) {
+      $templateCache.put('formio/components/china-address.html',
+        "<label ng-if=\"component.label && !component.hideLabel\" for=\"{{ componentId }}\" ng-class=\"{'field-required': isRequired(component)}\">{{ component.label | formioTranslate:null:builder }}</label>\r\n<span ng-if=\"!component.label && isRequired(component)\" class=\"glyphicon glyphicon-asterisk form-control-feedback field-required-inline\" aria-hidden=\"true\"></span>\r\n<ui-select ng-model=\"data[component.key]\" safe-multiple-to-single ng-disabled=\"readOnly\" ng-required=\"isRequired(component)\" id=\"{{ componentId }}\" name=\"{{ componentId }}\" tabindex=\"{{ component.tabindex || 0 }}\" theme=\"bootstrap\">\r\n  <ui-select-match class=\"ui-select-match\" placeholder=\"{{ component.placeholder | formioTranslate:null:builder }}\">{{$item.formatted_address || $select.selected.formatted_address}}</ui-select-match>\r\n  <ui-select-choices class=\"ui-select-choices\" repeat=\"address in addresses\" refresh=\"refreshAddress($select.search)\" refresh-delay=\"500\">\r\n    <div ng-bind-html=\"address.formatted_address | highlight: $select.search\"></div>\r\n  </ui-select-choices>\r\n</ui-select>\r\n<formio-errors ng-if=\"::!builder\"></formio-errors>\r\n"
+      );
+    }
+  ]);
+};
+
+},{}],189:[function(_dereq_,module,exports){
+"use strict";
+
 var GridUtils = _dereq_('../factories/GridUtils')();
 
 module.exports = function(app) {
@@ -9423,7 +9505,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{"../factories/GridUtils":232}],189:[function(_dereq_,module,exports){
+},{"../factories/GridUtils":233}],190:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function(app) {
   app.provider('formioComponents', function() {
@@ -9487,7 +9569,7 @@ module.exports = function(app) {
   }]);
 };
 
-},{}],190:[function(_dereq_,module,exports){
+},{}],191:[function(_dereq_,module,exports){
 "use strict";
 
 var GridUtils = _dereq_('../factories/GridUtils')();
@@ -9554,7 +9636,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{"../factories/GridUtils":232}],191:[function(_dereq_,module,exports){
+},{"../factories/GridUtils":233}],192:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = function(app) {
@@ -9583,7 +9665,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],192:[function(_dereq_,module,exports){
+},{}],193:[function(_dereq_,module,exports){
 "use strict";
 
 
@@ -9694,7 +9776,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],193:[function(_dereq_,module,exports){
+},{}],194:[function(_dereq_,module,exports){
 "use strict";
 
 var GridUtils = _dereq_('../factories/GridUtils')();
@@ -9723,7 +9805,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{"../factories/GridUtils":232}],194:[function(_dereq_,module,exports){
+},{"../factories/GridUtils":233}],195:[function(_dereq_,module,exports){
 "use strict";
 
 var formioUtils = _dereq_('formiojs/utils');
@@ -9856,7 +9938,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{"formiojs/utils":9}],195:[function(_dereq_,module,exports){
+},{"formiojs/utils":9}],196:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = function(app) {
@@ -10018,7 +10100,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],196:[function(_dereq_,module,exports){
+},{}],197:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = function(app) {
@@ -10219,7 +10301,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],197:[function(_dereq_,module,exports){
+},{}],198:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function(app) {
   app.config([
@@ -10253,7 +10335,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],198:[function(_dereq_,module,exports){
+},{}],199:[function(_dereq_,module,exports){
 "use strict";
 
 var GridUtils = _dereq_('../factories/GridUtils')();
@@ -10307,7 +10389,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{"../factories/GridUtils":232}],199:[function(_dereq_,module,exports){
+},{"../factories/GridUtils":233}],200:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = function(app) {
@@ -10576,7 +10658,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],200:[function(_dereq_,module,exports){
+},{}],201:[function(_dereq_,module,exports){
 "use strict";
 
 var GridUtils = _dereq_('../factories/GridUtils')();
@@ -10682,7 +10764,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{"../factories/GridUtils":232}],201:[function(_dereq_,module,exports){
+},{"../factories/GridUtils":233}],202:[function(_dereq_,module,exports){
 "use strict";
 
 var GridUtils = _dereq_('../factories/GridUtils')();
@@ -10718,7 +10800,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{"../factories/GridUtils":232}],202:[function(_dereq_,module,exports){
+},{"../factories/GridUtils":233}],203:[function(_dereq_,module,exports){
 "use strict";
 
 
@@ -10810,7 +10892,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],203:[function(_dereq_,module,exports){
+},{}],204:[function(_dereq_,module,exports){
 "use strict";
 var app = angular.module('formio');
 
@@ -10832,6 +10914,7 @@ _dereq_('./button')(app);
 _dereq_('./email')(app);
 _dereq_('./phonenumber')(app);
 _dereq_('./address')(app);
+_dereq_('./chinaaddress')(app);
 _dereq_('./datetime')(app);
 _dereq_('./day')(app);
 _dereq_('./currency')(app);
@@ -10853,7 +10936,7 @@ _dereq_('./panel')(app);
 _dereq_('./table')(app);
 _dereq_('./well')(app);
 
-},{"./address":185,"./button":186,"./checkbox":187,"./columns":188,"./components":189,"./container":190,"./content":191,"./currency":192,"./custom":193,"./datagrid":194,"./datetime":195,"./day":196,"./email":197,"./fieldset":198,"./file":199,"./form":200,"./hidden":201,"./htmlelement":202,"./number":204,"./page":205,"./panel":206,"./password":207,"./phonenumber":208,"./radio":209,"./resource":210,"./select":211,"./selectboxes":212,"./signature":213,"./survey":214,"./table":215,"./textarea":216,"./textfield":217,"./well":218}],204:[function(_dereq_,module,exports){
+},{"./address":185,"./button":186,"./checkbox":187,"./chinaaddress":188,"./columns":189,"./components":190,"./container":191,"./content":192,"./currency":193,"./custom":194,"./datagrid":195,"./datetime":196,"./day":197,"./email":198,"./fieldset":199,"./file":200,"./form":201,"./hidden":202,"./htmlelement":203,"./number":205,"./page":206,"./panel":207,"./password":208,"./phonenumber":209,"./radio":210,"./resource":211,"./select":212,"./selectboxes":213,"./signature":214,"./survey":215,"./table":216,"./textarea":217,"./textfield":218,"./well":219}],205:[function(_dereq_,module,exports){
 "use strict";
 
 
@@ -10918,7 +11001,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],205:[function(_dereq_,module,exports){
+},{}],206:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = function(app) {
@@ -10945,7 +11028,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],206:[function(_dereq_,module,exports){
+},{}],207:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = function(app) {
@@ -10981,7 +11064,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],207:[function(_dereq_,module,exports){
+},{}],208:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function(app) {
   app.config([
@@ -11012,7 +11095,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],208:[function(_dereq_,module,exports){
+},{}],209:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function(app) {
   app.config([
@@ -11047,7 +11130,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],209:[function(_dereq_,module,exports){
+},{}],210:[function(_dereq_,module,exports){
 "use strict";
 
 
@@ -11098,7 +11181,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],210:[function(_dereq_,module,exports){
+},{}],211:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = function(app) {
@@ -11286,7 +11369,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],211:[function(_dereq_,module,exports){
+},{}],212:[function(_dereq_,module,exports){
 "use strict";
 /*eslint max-depth: ["error", 6]*/
 
@@ -11895,7 +11978,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{"lodash/assign":151,"lodash/cloneDeep":152,"lodash/get":156,"lodash/isEqual":163,"lodash/set":177}],212:[function(_dereq_,module,exports){
+},{"lodash/assign":151,"lodash/cloneDeep":152,"lodash/get":156,"lodash/isEqual":163,"lodash/set":177}],213:[function(_dereq_,module,exports){
 "use strict";
 
 
@@ -12003,7 +12086,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],213:[function(_dereq_,module,exports){
+},{}],214:[function(_dereq_,module,exports){
 "use strict";
 
 var SignaturePad = _dereq_('signature_pad');
@@ -12144,7 +12227,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{"signature_pad":183}],214:[function(_dereq_,module,exports){
+},{"signature_pad":183}],215:[function(_dereq_,module,exports){
 "use strict";
 
 
@@ -12204,7 +12287,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],215:[function(_dereq_,module,exports){
+},{}],216:[function(_dereq_,module,exports){
 "use strict";
 
 var GridUtils = _dereq_('../factories/GridUtils')();
@@ -12283,7 +12366,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{"../factories/GridUtils":232}],216:[function(_dereq_,module,exports){
+},{"../factories/GridUtils":233}],217:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = function(app) {
@@ -12367,7 +12450,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],217:[function(_dereq_,module,exports){
+},{}],218:[function(_dereq_,module,exports){
 "use strict";
 
 
@@ -12428,7 +12511,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{}],218:[function(_dereq_,module,exports){
+},{}],219:[function(_dereq_,module,exports){
 "use strict";
 
 var GridUtils = _dereq_('../factories/GridUtils')();
@@ -12480,7 +12563,7 @@ module.exports = function(app) {
   ]);
 };
 
-},{"../factories/GridUtils":232}],219:[function(_dereq_,module,exports){
+},{"../factories/GridUtils":233}],220:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function() {
   return {
@@ -12558,7 +12641,7 @@ module.exports = function() {
   };
 };
 
-},{}],220:[function(_dereq_,module,exports){
+},{}],221:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function() {
   return {
@@ -12953,7 +13036,7 @@ module.exports = function() {
   };
 };
 
-},{}],221:[function(_dereq_,module,exports){
+},{}],222:[function(_dereq_,module,exports){
 "use strict";
 module.exports = ['$sce', '$parse', '$compile', function($sce, $parse, $compile) {
   return {
@@ -12970,7 +13053,7 @@ module.exports = ['$sce', '$parse', '$compile', function($sce, $parse, $compile)
   };
 }];
 
-},{}],222:[function(_dereq_,module,exports){
+},{}],223:[function(_dereq_,module,exports){
 "use strict";
 var _get = _dereq_('lodash/get');
 
@@ -13229,7 +13312,7 @@ module.exports = [
   }
 ];
 
-},{"lodash/get":156}],223:[function(_dereq_,module,exports){
+},{"lodash/get":156}],224:[function(_dereq_,module,exports){
 "use strict";
 module.exports = [
   'formioComponents',
@@ -13296,7 +13379,7 @@ module.exports = [
   }
 ];
 
-},{}],224:[function(_dereq_,module,exports){
+},{}],225:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function() {
   return {
@@ -13379,7 +13462,7 @@ module.exports = function() {
   };
 };
 
-},{}],225:[function(_dereq_,module,exports){
+},{}],226:[function(_dereq_,module,exports){
 "use strict";
 module.exports = [
   '$compile',
@@ -13398,7 +13481,7 @@ module.exports = [
   }
 ];
 
-},{}],226:[function(_dereq_,module,exports){
+},{}],227:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function() {
   return {
@@ -13408,7 +13491,7 @@ module.exports = function() {
   };
 };
 
-},{}],227:[function(_dereq_,module,exports){
+},{}],228:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function() {
   return {
@@ -13440,7 +13523,7 @@ module.exports = function() {
   };
 };
 
-},{}],228:[function(_dereq_,module,exports){
+},{}],229:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function() {
   return {
@@ -13495,7 +13578,7 @@ module.exports = function() {
   };
 };
 
-},{}],229:[function(_dereq_,module,exports){
+},{}],230:[function(_dereq_,module,exports){
 "use strict";
 var isNaN = _dereq_('lodash/isNAN');
 var isFinite = _dereq_('lodash/isFinite');
@@ -14081,7 +14164,7 @@ module.exports = function() {
   };
 };
 
-},{"lodash/isFinite":164,"lodash/isNAN":167}],230:[function(_dereq_,module,exports){
+},{"lodash/isFinite":164,"lodash/isNAN":167}],231:[function(_dereq_,module,exports){
 "use strict";
 module.exports = [
   'Formio',
@@ -14264,7 +14347,7 @@ module.exports = [
   }
 ];
 
-},{}],231:[function(_dereq_,module,exports){
+},{}],232:[function(_dereq_,module,exports){
 "use strict";
 var formioUtils = _dereq_('formiojs/utils');
 var _filter = _dereq_('lodash/filter');
@@ -14670,7 +14753,7 @@ module.exports = function() {
   };
 };
 
-},{"formiojs/utils":9,"lodash/filter":155,"lodash/get":156}],232:[function(_dereq_,module,exports){
+},{"formiojs/utils":9,"lodash/filter":155,"lodash/get":156}],233:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function() {
   var generic = function(data, component) {
@@ -14796,7 +14879,7 @@ module.exports = function() {
   };
 };
 
-},{}],233:[function(_dereq_,module,exports){
+},{}],234:[function(_dereq_,module,exports){
 "use strict";
 module.exports = [
   '$q',
@@ -14845,7 +14928,7 @@ module.exports = [
   }
 ];
 
-},{}],234:[function(_dereq_,module,exports){
+},{}],235:[function(_dereq_,module,exports){
 "use strict";
 module.exports = [
   'Formio',
@@ -14879,7 +14962,7 @@ module.exports = [
   }
 ];
 
-},{}],235:[function(_dereq_,module,exports){
+},{}],236:[function(_dereq_,module,exports){
 "use strict";
 module.exports = [
   'FormioUtils',
@@ -14888,7 +14971,7 @@ module.exports = [
   }
 ];
 
-},{}],236:[function(_dereq_,module,exports){
+},{}],237:[function(_dereq_,module,exports){
 "use strict";
 module.exports = [
   '$sce',
@@ -14901,7 +14984,7 @@ module.exports = [
   }
 ];
 
-},{}],237:[function(_dereq_,module,exports){
+},{}],238:[function(_dereq_,module,exports){
 "use strict";
 module.exports = [
   function() {
@@ -14920,7 +15003,7 @@ module.exports = [
   }
 ];
 
-},{}],238:[function(_dereq_,module,exports){
+},{}],239:[function(_dereq_,module,exports){
 "use strict";
 module.exports = [
   'formioTableView',
@@ -14933,7 +15016,7 @@ module.exports = [
   }
 ];
 
-},{}],239:[function(_dereq_,module,exports){
+},{}],240:[function(_dereq_,module,exports){
 "use strict";
 module.exports = [
   'Formio',
@@ -14948,7 +15031,7 @@ module.exports = [
   }
 ];
 
-},{}],240:[function(_dereq_,module,exports){
+},{}],241:[function(_dereq_,module,exports){
 "use strict";
 module.exports = [
   '$filter',
@@ -14997,7 +15080,7 @@ module.exports = [
   }
 ];
 
-},{}],241:[function(_dereq_,module,exports){
+},{}],242:[function(_dereq_,module,exports){
 "use strict";
 module.exports = ['$sce', function($sce) {
   return function(val) {
@@ -15005,7 +15088,7 @@ module.exports = ['$sce', function($sce) {
   };
 }];
 
-},{}],242:[function(_dereq_,module,exports){
+},{}],243:[function(_dereq_,module,exports){
 "use strict";
 _dereq_('./polyfills/polyfills');
 
@@ -15162,7 +15245,7 @@ app.run([
 
 _dereq_('./components');
 
-},{"./components":203,"./directives/customValidator":219,"./directives/formio":220,"./directives/formioBindHtml.js":221,"./directives/formioComponent":222,"./directives/formioComponentView":223,"./directives/formioDelete":224,"./directives/formioElement":225,"./directives/formioErrors":226,"./directives/formioSubmission":227,"./directives/formioSubmissions":228,"./directives/formioWizard":229,"./factories/FormioScope":230,"./factories/FormioUtils":231,"./factories/formioInterceptor":233,"./factories/formioTableView":234,"./filters/flattenComponents":235,"./filters/safehtml":236,"./filters/tableComponents":237,"./filters/tableFieldView":238,"./filters/tableView":239,"./filters/translate":240,"./filters/trusturl":241,"./i18n/zh-CN.js":243,"./polyfills/polyfills":245,"./providers/Formio":246}],243:[function(_dereq_,module,exports){
+},{"./components":204,"./directives/customValidator":220,"./directives/formio":221,"./directives/formioBindHtml.js":222,"./directives/formioComponent":223,"./directives/formioComponentView":224,"./directives/formioDelete":225,"./directives/formioElement":226,"./directives/formioErrors":227,"./directives/formioSubmission":228,"./directives/formioSubmissions":229,"./directives/formioWizard":230,"./factories/FormioScope":231,"./factories/FormioUtils":232,"./factories/formioInterceptor":234,"./factories/formioTableView":235,"./filters/flattenComponents":236,"./filters/safehtml":237,"./filters/tableComponents":238,"./filters/tableFieldView":239,"./filters/tableView":240,"./filters/translate":241,"./filters/trusturl":242,"./i18n/zh-CN.js":244,"./polyfills/polyfills":246,"./providers/Formio":247}],244:[function(_dereq_,module,exports){
 "use strict";
 /**
  * [exports description]
@@ -15586,7 +15669,7 @@ module.exports = {
     'WYSIWYG Settings.tooltip':'请输入富文本编辑器设置信息'
 };
 
-},{}],244:[function(_dereq_,module,exports){
+},{}],245:[function(_dereq_,module,exports){
 "use strict";
 'use strict';
 
@@ -15617,13 +15700,13 @@ if (typeof Object.assign != 'function') {
   })();
 }
 
-},{}],245:[function(_dereq_,module,exports){
+},{}],246:[function(_dereq_,module,exports){
 "use strict";
 'use strict';
 
 _dereq_('./Object.assign');
 
-},{"./Object.assign":244}],246:[function(_dereq_,module,exports){
+},{"./Object.assign":245}],247:[function(_dereq_,module,exports){
 "use strict";
 module.exports = function() {
   // The formio class.
@@ -15693,5 +15776,5 @@ module.exports = function() {
   };
 };
 
-},{"formiojs":2}]},{},[242])(242)
+},{"formiojs":2}]},{},[243])(243)
 });

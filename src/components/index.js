@@ -18,6 +18,7 @@ require('./button')(app);
 require('./email')(app);
 require('./phonenumber')(app);
 require('./address')(app);
+require('./chinaaddress')(app);
 require('./datetime')(app);
 require('./day')(app);
 require('./currency')(app);

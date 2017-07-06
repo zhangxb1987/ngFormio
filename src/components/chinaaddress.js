@@ -2,9 +2,8 @@ var fs = require('fs');
 
 module.exports = function(app) {
   app.config([
-    'formioComponentsProvider','$log',
-    function(formioComponentsProvider,$log) {
-      $log.debug('chinaaddress plugin');
+    'formioComponentsProvider',
+    function(formioComponentsProvider) {
       formioComponentsProvider.register('chinaaddress', {
         title: 'China Address',
         template: 'formio/components/china-address.html',
@@ -73,7 +72,7 @@ module.exports = function(app) {
     '$templateCache',
     function($templateCache) {
       $templateCache.put('formio/components/china-address.html',
-        fs.readFileSync(__dirname + '/../templates/components/address.html', 'utf8')
+        fs.readFileSync(__dirname + '/../templates/components/china-address.html', 'utf8')
       );
     }
   ]);

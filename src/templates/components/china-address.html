@@ -1,0 +1,13 @@
+<div class="china-address-input">
+  <china-address-input
+    name="{{componentId}}"
+    component-id="componentId"
+    read-only="isDisabled(component, data)"
+    component="component"
+    ng-required="isRequired(component)"
+    custom-validator="component.validate.custom"
+    ng-model="data[component.key]"
+    tabindex="{{ component.tabindex || 0 }}"
+    builder="builder"
+  ></china-address-input>
+</div>
