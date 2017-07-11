@@ -398,6 +398,10 @@ module.exports = {
     'Require Month.label':'月字段必填',
     'Require Year.label':'年字段必填',
 
+    'Select.Province.label':'省',
+    'Select.City.label':'市',
+    'Select.County.label':'县',
+
     'Removing this component will also': '移除该控件会同时',
     'remove all of its children': '移除它的所有子元素',
     'Are you sure you want to do this': '您是否确认',
